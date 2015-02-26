@@ -7,6 +7,11 @@ module Griddler
         @params = params
       end
 
+	private
+
+	attr_reader :tempdir
+	tempdir = '/tmp/test'
+
       def self.normalize_params(params)
         adapter = new(params)
         adapter.normalize_params
@@ -56,7 +61,8 @@ module Griddler
 
       def create_tempfile(attachment)
         filename = attachment[:Name]
-        tempfile = Tempfile.new(filename, Dir::tmpdir, encoding: 'ascii-8bit')
+	
+        tempfile = Tempfile.new(filename, tempdir, encoding: 'ascii-8bit')
         tempfile.write(Base64.decode64(attachment[:Content]))
         tempfile.rewind
         tempfile
