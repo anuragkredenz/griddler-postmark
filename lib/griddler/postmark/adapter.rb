@@ -7,10 +7,6 @@ module Griddler
         @params = params
       end
 
-	private
-
-	attr_reader :tempdir
-	tempdir = '/tmp/test'
 
       def self.normalize_params(params)
         adapter = new(params)
@@ -61,7 +57,11 @@ module Griddler
 
       def create_tempfile(attachment)
         filename = attachment[:Name]
-	
+
+	# This caode takes the name of the directory from the config/initializers/griddler-postmark.rb file	
+	tempdir = Griddler::get
+	Rails.logger.debug "DEBUG: tempdir is #{tempdir}"
+
         tempfile = Tempfile.new(filename, tempdir, encoding: 'ascii-8bit')
         tempfile.write(Base64.decode64(attachment[:Content]))
         tempfile.rewind

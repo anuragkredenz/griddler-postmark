@@ -23,6 +23,24 @@ Griddler.configure do |config|
 end
 ```
 
+## Attachment Directory
+
+Create an initializer with the following code
+
+```
+
+module Griddler
+
+  @@gtempdir = '/home/anurag/testapp/public/attachments/'
+
+  def self.get
+        @@gtempdir
+  end
+
+end
+
+
+
 Then configure Postmark to use the endpoint specified in Griddler's
 docs.
 
